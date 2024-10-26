@@ -1,6 +1,7 @@
 package brcomkassin.pets;
 
 import org.bukkit.entity.Player;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public class PetEntity {
         }
         pet.spawn(player.getLocation());
         PET_MAP.put(player.getUniqueId(), pet);
-        player.sendMessage("Novo pet spawnado!");
+        player.sendMessage("Pet: " + pet.getName() + " foi spawnado!");
         return pet;
     }
 

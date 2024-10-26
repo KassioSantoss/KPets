@@ -2,18 +2,20 @@ package brcomkassin.pets;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
-import java.util.UUID;
+
 
 @Setter
 @Getter
 public abstract class Pet {
-    private UUID owner;
-    protected ArmorStand entity;
+    private ArmorStand entity;
+    private String name;
+    private String id;
 
-    public Pet(UUID owner) {
-        this.owner = owner;
+    public Pet(String id) {
+        this.id = id;
     }
 
     public abstract void spawn(Location location);
@@ -22,9 +24,12 @@ public abstract class Pet {
     }
 
     public void remove() {
-        if (entity != null && !entity.isDead()){
+        if (entity != null && !entity.isDead()) {
             entity.remove();
         }
     }
 
+    public void setName(String name) {
+        this.name = ChatColor.translateAlternateColorCodes('&', name);
+    }
 }
