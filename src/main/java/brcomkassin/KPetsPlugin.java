@@ -1,8 +1,6 @@
 package brcomkassin;
 
 import brcomkassin.pets.PetCommand;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.Zombie;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class KPetsPlugin extends JavaPlugin {
