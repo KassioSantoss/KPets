@@ -1,0 +1,4 @@
+name: KPets
+version: '1'
+main: brcomkassin.KPetsPlugin
+api-version: '1.21'
