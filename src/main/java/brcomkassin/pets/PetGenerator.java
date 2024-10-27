@@ -1,6 +1,6 @@
 package brcomkassin.pets;
 
-import brcomkassin.pets.utils.PetBuilder;
+import brcomkassin.pets.utils.PetRenderedCache;
 import brcomkassin.utils.Message;
 import org.bukkit.entity.Player;
 
@@ -14,7 +14,7 @@ public final class PetGenerator {
         }
 
         pet.spawn(player);
-        Message.Chat.send(player, "&6&lPet: " + player.getName().toUpperCase() + " &6foi spawnado!");
+        Message.Chat.send(player, "&6&lPet: " + pet.getName().toUpperCase() + " &6foi spawnado!");
     }
 
 }

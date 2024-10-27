@@ -1,13 +1,13 @@
 package brcomkassin.pets.utils;
 
 import brcomkassin.pets.Pet;
-import brcomkassin.pets.PetRenderedCache;
 import brcomkassin.pets.exceptions.PetSpawnException;
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+
 import java.util.function.Supplier;
 
 public class PetBuilder<T extends Pet> {
@@ -18,6 +18,10 @@ public class PetBuilder<T extends Pet> {
     private boolean isVisible = false;
     private boolean canMove = false;
     private boolean customNameVisible = true;
+
+    public static <T extends Pet> PetBuilder<? extends T> getInstance(Supplier<T> supplier) {
+        return new PetBuilder<>(supplier);
+    }
 
     public PetBuilder(Supplier<T> petSupplier) {
         this.petSupplier = petSupplier;

@@ -1,4 +1,4 @@
-package brcomkassin.pets;
+package brcomkassin.pets.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

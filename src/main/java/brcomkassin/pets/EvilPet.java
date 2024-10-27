@@ -7,18 +7,22 @@ public final class EvilPet extends Pet {
 
     @Override
     public void spawn(Player player) {
-        EvilPet pet = new PetBuilder<>(EvilPet::new)
+        String customName = PetType.EVIL_PET.getName();
+        String modeledId = PetType.EVIL_PET.getId();
+        System.out.println("Custom Name: " + customName);
+        System.out.println("ModeledId: " + modeledId);
+
+       EvilPet pet = PetBuilder.getInstance(EvilPet::new)
                 .forPlayer(player)
-                .withCustomName(PetType.EVIL_PET.getName())
-                .withModelId(PetType.EVIL_PET.getId())
+                .withCustomName(customName)
+                .withModelId(modeledId)
                 .setVisible(false)
                 .setCanMove(false)
                 .setCustomNameVisible(true)
                 .build();
 
-        pet.setName(PetType.EVIL_PET.getName());
-        pet.setId(PetType.EVIL_PET.getId());
-        pet.setOwner(player.getUniqueId());
+       pet.setName(customName);
+       pet.setId(modeledId);
     }
 
 }
