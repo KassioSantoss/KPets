@@ -23,6 +23,7 @@ public class PetCommand implements CommandExecutor {
 
         PetType petType = PetType.getByName(args[0]);
 
+
         if (args[0].equalsIgnoreCase("remove")) {
             PetRenderedCache.removePet(player);
             return true;

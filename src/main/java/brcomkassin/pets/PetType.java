@@ -9,8 +9,8 @@ import java.util.Arrays;
 @Getter
 public enum PetType {
 
-    EVIL_PET("&4Evil Pet", "cube-evil"),
-    NONE(null, null);
+    EVIL_PET("Evil Pet", "cubee-evil"),
+    NONE("none", "none");
 
     private final String name;
     private final String modelId;
@@ -19,7 +19,7 @@ public enum PetType {
         final PetType[] values = values();
         return Arrays
                 .stream(values)
-                .filter(v -> v.getName().equals(name))
+                .filter(v -> v.name().equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(NONE);
     }

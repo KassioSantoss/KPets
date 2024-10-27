@@ -27,6 +27,11 @@ public class PetRenderedCache {
         renders.add(rendered);
     }
 
+    public static boolean hasPet(Player player) {
+        final String playerName = player.getName();
+        return pets.containsKey(playerName);
+    }
+
     public static void removePet(Player player){
         final String playerName = player.getName();
 
