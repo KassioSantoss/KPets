@@ -1,16 +1,7 @@
 package brcomkassin.pets.utils;
 
-import lombok.AllArgsConstructor;
+import brcomkassin.pets.Pet;
 import lombok.Getter;
-import lombok.Setter;
-import java.util.UUID;
+import org.bukkit.entity.Player;
 
-@AllArgsConstructor
-@Getter
-@Setter
-public final class PetRendered {
-
-    private UUID owner;
-    private String idPet;
-
-}
+@Getter public record PetRendered(Player owner, Pet pet) { }

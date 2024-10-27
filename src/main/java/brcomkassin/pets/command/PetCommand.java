@@ -2,6 +2,7 @@ package brcomkassin.pets.command;
 
 import brcomkassin.pets.PetGenerator;
 import brcomkassin.pets.PetType;
+import brcomkassin.pets.utils.PetRenderedCache;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class PetCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+
         if (!(sender instanceof Player player)) return true;
 
         if (args.length < 1) {
@@ -22,7 +24,7 @@ public class PetCommand implements CommandExecutor {
         PetType petType = PetType.getByName(args[0]);
 
         if (args[0].equalsIgnoreCase("remove")) {
-            petType.getPet().removePet(player.getUniqueId());
+            PetRenderedCache.removePet(player);
             return true;
         }
 
@@ -30,7 +32,8 @@ public class PetCommand implements CommandExecutor {
             player.sendMessage("Não existe nenhum pet com esse nome!");
             return true;
         }
-        PetGenerator.spawnPet(player, petType.getPet());
+
+        PetGenerator.spawnPet(player, petType);
 
         return false;
     }

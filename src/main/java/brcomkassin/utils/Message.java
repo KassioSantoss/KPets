@@ -8,18 +8,25 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 
+@SuppressWarnings("deprecation")
 public interface Message {
-    class Chat {
+
+    final class Chat {
+        public static void send(Player player, String message) {
+            final String colored = ChatColor.translateAlternateColorCodes('&', message);
+            player.sendMessage(colored);
+        }
+
         public static void send(Player player, String... message) {
-            Arrays.stream(message)
-                    .map(string -> ChatColor.translateAlternateColorCodes('&', string))
-                    .forEach(player::sendMessage);
+            for (String line : message)
+                send(player, line);
         }
     }
 
-    class ActionBar {
+    final class ActionBar {
         public static void send(Player player, String message) {
-            BaseComponent baseComponent = new TextComponent(ChatColor.translateAlternateColorCodes('&', message));
+            String colored = ChatColor.translateAlternateColorCodes('&', message);
+            BaseComponent baseComponent = new TextComponent(colored);
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, baseComponent);
         }
     }

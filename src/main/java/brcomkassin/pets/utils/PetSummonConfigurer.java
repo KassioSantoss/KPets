@@ -1,17 +1,20 @@
 package brcomkassin.pets.utils;
 
 import brcomkassin.pets.Pet;
-import brcomkassin.pets.exceptions.PetSpawnException;
+import brcomkassin.pets.PetType;
+import brcomkassin.pets.exceptions.PetSpawningException;
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
+import lombok.Data;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
-import java.util.function.Supplier;
+import java.util.UUID;
 
-public class PetBuilder<T extends Pet> {
-    private final Supplier<T> petSupplier;
+@SuppressWarnings("deprecation")
+@Data(staticConstructor = "of") public final class PetSummonConfigurer {
+
     private Player player;
     private String customName;
     private String modelId;
@@ -19,53 +22,45 @@ public class PetBuilder<T extends Pet> {
     private boolean canMove = false;
     private boolean customNameVisible = true;
 
-    public static <T extends Pet> PetBuilder<? extends T> getInstance(Supplier<T> supplier) {
-        return new PetBuilder<>(supplier);
-    }
-
-    public PetBuilder(Supplier<T> petSupplier) {
-        this.petSupplier = petSupplier;
-    }
-
-    public PetBuilder<T> forPlayer(Player player) {
+    public PetSummonConfigurer forPlayer(Player player) {
         this.player = player;
         return this;
     }
 
-    public PetBuilder<T> withCustomName(String customName) {
+    public PetSummonConfigurer withCustomName(String customName) {
         this.customName = customName;
         return this;
     }
 
-    public PetBuilder<T> withModelId(String modelId) {
-        this.modelId = modelId;
+    public PetSummonConfigurer withType(PetType type) {
+        this.modelId = type.getModelId();
         return this;
     }
 
-    public PetBuilder<T> setVisible(boolean visible) {
+    public PetSummonConfigurer setVisible(boolean visible) {
         this.isVisible = visible;
         return this;
     }
 
-    public PetBuilder<T> setCanMove(boolean canMove) {
+    public PetSummonConfigurer setCanMove(boolean canMove) {
         this.canMove = canMove;
         return this;
     }
 
-    public PetBuilder<T> setCustomNameVisible(boolean customNameVisible) {
+    public PetSummonConfigurer setCustomNameVisible(boolean customNameVisible) {
         this.customNameVisible = customNameVisible;
         return this;
     }
 
-    public T build() {
+    public Pet build() {
         if (player == null) {
-            throw new PetSpawnException("O jogador deve existir para gerar um Pet.");
+            throw new PetSpawningException("O jogador deve existir para gerar um Pet.");
         }
         if (customName == null) {
-            throw new PetSpawnException("O nome personalizado do Pet não pode ser nulo.");
+            throw new PetSpawningException("O nome personalizado do Pet não pode ser nulo.");
         }
         if (modelId == null) {
-            throw new PetSpawnException("O ID do modelo do Pet não pode ser nulo.");
+            throw new PetSpawningException("O ID do modelo do Pet não pode ser nulo.");
         }
 
         try {
@@ -79,16 +74,18 @@ public class PetBuilder<T extends Pet> {
             ActiveModel activeModel = ModelEngineAPI.createActiveModel(modelId);
             modeledEntity.addModel(activeModel, true);
 
-            T pet = petSupplier.get();
+            final UUID owner = player.getUniqueId();
+
+            final Pet pet = new Pet();
             pet.setName(customName);
             pet.setEntity(baseEntity);
-            pet.setOwner(player.getUniqueId());
+            pet.setOwner(owner);
 
-            PetRenderedCache.addOwnerAndPet(player.getUniqueId(), pet);
+            PetRenderedCache.addOwnerAndPet(player, pet);
+
             return pet;
-
         } catch (Exception e) {
-            throw new PetSpawnException("Falha ao gerar o pet devido a um erro inesperado.", e);
+            throw new PetSpawningException("Falha ao gerar o pet devido a um erro inesperado.", e);
         }
     }
 }
