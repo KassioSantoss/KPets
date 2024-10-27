@@ -81,8 +81,6 @@ import java.util.UUID;
             pet.setEntity(baseEntity);
             pet.setOwner(owner);
 
-            PetRenderedCache.addOwnerAndPet(player, pet);
-
             return pet;
         } catch (Exception e) {
             throw new PetSpawningException("Falha ao gerar o pet devido a um erro inesperado.", e);
