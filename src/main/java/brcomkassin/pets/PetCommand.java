@@ -16,15 +16,12 @@ public class PetCommand implements CommandExecutor {
             return true;
         }
 
-        PetType petType;
+        PetType petType = PetType.getByName(args[0]);
 
-        try {
-            petType = PetType.valueOf(args[0].toUpperCase());
-        } catch (IllegalArgumentException e) {
+        if (petType == PetType.NONE) {
             player.sendMessage("Não existe nenhum pet com esse nome!");
             return true;
         }
-
         PetGenerator.spawnPet(player, petType.getPet());
 
         return false;

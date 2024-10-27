@@ -34,7 +34,4 @@ public abstract class Pet {
         PetRenderedCache.getPET_MAP().remove(ownerUuid);
     }
 
-    public void setName(String name) {
-        this.name = ChatColor.translateAlternateColorCodes('&', name);
-    }
 }
